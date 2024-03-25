@@ -1,25 +1,84 @@
 <div class="component-body">
   <div style="text-align: right; background: #e1e1e1; height: 60px;line-height: 3.5;">
-    <select name="DataModel" id="DataModel" style="width: 150px;margin-right: 15px;height: 30px;">
-      <option value="1" selected>Data Model 1</option>
+    <select name="DataModel" id="DataModel" style="width: 150px;margin-right: 15px;height: 30px;"
+      [(ngModel)]="dataModel">
+      <option value="decisionTree">Decision Tree</option>
+      <option value="randomForest">Random Forest</option>
+      <option value="logisticRegression">Logistic Regression</option>
+      <option value="transformers">Transformers</option>
+      <option value="llm">LLM</option>
     </select>
-    <button style="width: 75px;margin-right: 15px;height: 30px;">Run</button>
+    <button style="width: 75px;margin-right: 15px;height: 30px;" (click)="runModel()">Run</button>
   </div>
   <div style="display: flex; height: 300px;">
     <div style="flex: 1;">
-      <img src="../assets/images/heatmap.png" style="width: 100%;" alt="" srcset="">
+      <img [src]="graphSrc" style="width: 100%;height: 300px;" alt="" srcset="">
     </div>
     <div style="flex: 1;">
-      <img src="../assets/images/linemap.png" style="width: 100%;" alt="" srcset="">
-    </div>
-    <div style="flex: 1;">
-      <img src="../assets/images/grid.png" style="width: 100%;" alt="" srcset="">
+      <!-- <img src="../assets/images/grid.png" style="width: 100%;" alt="" srcset=""> -->
+      <div class="model-accuracy">
+        Model Accuracy: {{modelAccuracy.modelAccuracy}}
+      </div>
+      <table style="width: 100%;height: 245px;">
+        <th></th>
+        <th>F1-Score</th>
+        <th>Precision</th>
+        <th>Recall</th>
+        <th>Support</th>
+        <tr>
+          <td>debug</td>
+          <td>{{modelAccuracy['debug']['f1-score']}}</td>
+          <td>{{modelAccuracy['debug']['precision']}}</td>
+          <td>{{modelAccuracy['debug']['recall']}}</td>
+          <td>{{modelAccuracy['debug']['support']}}</td>
+        </tr>
+        <tr>
+          <td>error</td>
+          <td>{{modelAccuracy['error']['f1-score']}}</td>
+          <td>{{modelAccuracy['error']['precision']}}</td>
+          <td>{{modelAccuracy['error']['recall']}}</td>
+          <td>{{modelAccuracy['error']['support']}}</td>
+        </tr>
+        <tr>
+          <td>info</td>
+          <td>{{modelAccuracy['info']['f1-score']}}</td>
+          <td>{{modelAccuracy['info']['precision']}}</td>
+          <td>{{modelAccuracy['info']['recall']}}</td>
+          <td>{{modelAccuracy['info']['support']}}</td>
+        </tr>
+        <tr>
+          <td>warn</td>
+          <td>{{modelAccuracy['warn']['f1-score']}}</td>
+          <td>{{modelAccuracy['warn']['precision']}}</td>
+          <td>{{modelAccuracy['warn']['recall']}}</td>
+          <td>{{modelAccuracy['warn']['support']}}</td>
+        </tr>
+      </table>
     </div>
   </div>
-  <div style="height: calc(100vh - 375px);overflow: auto; margin-top: 15px;">
+  <div style="height: calc(100vh - 361px);overflow: auto;">
     <div *ngFor="let d of data" style="padding: 15px;">
-      <div style="height: 30px;line-height: 2.3;background: #e1e1e1;padding-left: 10px;">Number of Lines - {{d.numberOfLines}} - {{d.status}}</div>
-      <div style="max-height: 65px;overflow: auto;padding: 10px;border: 1px solid #e1e1e1;">{{d.text}}</div>
+      <div style="height: 30px;line-height: 2.3;background: #e1e1e1;padding-left: 10px;">Number of Lines -
+        {{d.numberOfLines}} - {{d.status}}</div>
+      <div style="max-height: 65px;overflow: auto;padding: 10px;border: 1px solid #e1e1e1;">
+        <div *ngFor="let t of d.text">
+          <li>{{t}}</li>
+        </div>
+      </div>
+    </div>
+    <div style="padding: 15px;">
+      <div style="height: 30px;line-height: 2.3;background: #e1e1e1;padding-left: 10px;">Number of Lines -
+        {{misclassified.length}} - misclassified</div>
+      <div style="max-height: 65px;overflow: auto;padding: 10px;border: 1px solid #e1e1e1;">
+        <div *ngFor="let t of misclassified">
+<pre>
+  Actual Log Level - {{t.actual_log_level}}
+  Predicted Log Level - {{t.predicted_log_level}}
+  Log line - {{t.log_line}}
+</pre>
+<br>
+        </div>
+      </div>
     </div>
   </div>
 </div>

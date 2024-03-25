@@ -4,3 +4,29 @@
     word-spacing: 3px;
     line-height: 20px;
 }
+th {
+    /* text-align: left; */
+    font-weight: bold;
+    border: 1px solid #e1e1e1;
+    background: rgb(191 157 118 / 65%);
+    vertical-align: middle;
+    text-align: center;
+}
+td {
+    text-align: left;
+    /* font-weight: bold; */
+    border: 1px solid #e1e1e1;
+    vertical-align: middle;
+    text-align: center;
+}
+table {
+    height: calc(100% - 55px);
+}
+.model-accuracy {
+    text-align: center;
+    height: 55px;
+    line-height: 3.5;
+    font-size: 16px;
+    font-weight: bold;
+    background: rgb(191 157 118 / 85%);
+}
