@@ -41,6 +41,7 @@ export class AppComponent implements OnInit{
     }
   ];
   misclassified: any = [];
+  loading: boolean = false;
 
   constructor(public service: AppService) {}
 
@@ -49,6 +50,7 @@ export class AppComponent implements OnInit{
   }
 
   runModel() {
+    this.loading = true;
     this.graphSrc = `http://localhost:9000/modelCM?model=${this.dataModel}`;
     this.service.getResults(this.dataModel).subscribe((resp: any) => {
       Object.keys(resp).forEach(criticality => {
@@ -78,6 +80,7 @@ export class AppComponent implements OnInit{
             break;
         }
       });
+      this.loading = false;
     });
     this.service.getAccuracy(this.dataModel).subscribe((resp) => {
       this.modelAccuracy = resp;
