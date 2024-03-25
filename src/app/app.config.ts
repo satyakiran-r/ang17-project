@@ -4,7 +4,6 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 
 import 'reset-css';
-import '@swimlane/ngx-charts';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes)]
