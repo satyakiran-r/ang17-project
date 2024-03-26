@@ -53,6 +53,28 @@ export class AppComponent implements OnInit{
     this.loading = true;
     this.graphSrc = `http://localhost:9000/modelCM?model=${this.dataModel}`;
     this.service.getResults(this.dataModel).subscribe((resp: any) => {
+      this.data = [
+        {
+          numberOfLines: 0,
+          status: "debug",
+          text: []
+        },
+        {
+          numberOfLines: 0,
+          status: "error",
+          text: []
+        },
+        {
+          numberOfLines: 0,
+          status: "info",
+          text: []
+        },
+        {
+          numberOfLines: 0,
+          status: "warn",
+          text: []
+        }
+      ];
       Object.keys(resp).forEach(criticality => {
         switch(criticality) {
           case 'debug':
@@ -74,6 +96,8 @@ export class AppComponent implements OnInit{
           case 'misclassified':
             if(resp.misclassified.length > 0) {
               this.misclassified = resp.misclassified;
+            } else {
+              this.misclassified = [];
             }
             // this.data[4].numberOfLines = resp.misclassified.length;
             // this.data[4].text = resp.misclassified;
